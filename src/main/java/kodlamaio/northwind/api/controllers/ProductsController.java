@@ -15,6 +15,7 @@ import kodlamaio.northwind.business.abstracts.ProductService;
 import kodlamaio.northwind.core.utilities.results.DataResult;
 import kodlamaio.northwind.core.utilities.results.Result;
 import kodlamaio.northwind.entities.concretes.Product;
+import kodlamaio.northwind.entities.dtos.ProductWithCategoryDto;
 
 
 @RestController
@@ -34,6 +35,11 @@ public class ProductsController {
 		return this.productService.getAll();
 	}
 	
+	@GetMapping("/getProductWithCategoryDeatails")
+	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDeatails(){
+		return this.productService.getProductWithCategoryDeatails();
+	}
+	
 	@PostMapping("/add")
 	public Result add(@RequestBody Product product) {
 		return this.productService.add(product);
@@ -42,5 +48,24 @@ public class ProductsController {
 	@GetMapping("/getByProductName")
 	public DataResult<Product> getByProductName(@RequestParam String productName){
 		return this.productService.getByProductName(productName);
+	}
+	
+	@GetMapping("/getByProductNameAndCategoryId")
+	public DataResult<Product> getByProductNameAndCategoryId(@RequestParam("productName")String productName, @RequestParam("categoryId")int  categoryId){
+		return this.productService.getByProductNameAndCategoryId(productName, categoryId);
+	}
+	
+	@GetMapping("/getByProductNameContains")
+	public DataResult<List<Product>> getByProductNameContains(@RequestParam String productName){
+		return this.productService.getByProductNameContains(productName);
+	}
+	
+	@GetMapping("/getAllByPage")
+	DataResult<List<Product>> getAll(int pageNo, int pageSize){
+		return this.productService.getAll(pageNo, pageSize);
+	}
+	@GetMapping("/getAllDesc")
+	DataResult<List<Product>> getAllSorted(){
+		return this.productService.getAllSorted();
 	}
 }
